@@ -1,0 +1,22 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "local/hashibox"
+
+  config.vm.provider "libvirt" do |l, override|
+    l.memory = 1024
+    override.vm.synced_folder "./", "/vagrant", type: 'nfs'
+  end
+
+  config.vm.define "one" do |n1|
+    n1.vm.hostname = "one"
+  end
+
+  config.vm.define "two" do |n2|
+    n2.vm.hostname = "two"
+  end
+
+  config.vm.define "three" do |n3|
+    n3.vm.hostname = "three"
+  end
+
+  config.vm.provision "shell", privileged: true, path: './scripts/provision.sh'
+end
